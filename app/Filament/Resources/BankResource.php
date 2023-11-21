@@ -18,7 +18,7 @@ class BankResource extends Resource
     protected static ?string $model = Bank::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
-    
+    protected static ?int $navigationSort =8;
     protected static ?string $navigationLabel = 'Bank';
 
     public static function getNavigationGroup() : String

@@ -12,7 +12,9 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Grouping\Group;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Enums\FiltersLayout;
@@ -22,19 +24,26 @@ use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\DataShuResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DataShuResource\RelationManagers;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\table;
 
 class DataShuResource extends Resource
 {
     protected static ?string $model = DataShu::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationLabel = 'Sisa Hasil Usaha';
-
+    protected static ?string $navigationIcon = 'heroicon-o-arrows-pointing-in';
+    public static function getPluralLabel(): ?string
+    {
+        return 'Sisa Hasil Usaha';
+    }
     public static function getNavigationGroup() : String
     {
-        return 'Transaction';
+        return 'Simpanan';
     }
-
+    protected static ?int $navigationSort =5;
+    public static function getSlug(): string
+    {
+        return 'data-sisa-hasil-usaha';
+    }   
     public static function form(Form $form): Form
     {
         return $form
@@ -66,15 +75,12 @@ class DataShuResource extends Resource
                 TextInput::make('saldo')->hidden(),
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query): Builder => $query->orderBy('thn','desc')->distinct('users_id'))
-            // Untuk menggroupkan row atau isi table
-            // ->groups([
-            //     'User.name'
-            // ])
+         ->modifyQueryUsing(fn(Builder $query): Builder => $query
+         ->whereRaw('saldo_akhir in (select max(saldo_akhir+0) from data_shu group by (users_id)) '))
+            
             ->columns([
                 Tables\Columns\TextColumn::make('User.nag')
                     ->label(label:'NAG')
@@ -82,18 +88,21 @@ class DataShuResource extends Resource
                 Tables\Columns\TextColumn::make('User.name')
                     ->label(label:'Nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('thn')
-                    ->label(label:'Tahun')
+                Tables\Columns\TextColumn::make('thn_buku')
+                    ->label(label:'Tahun Buku'),
+                Tables\Columns\TextColumn::make('thn_input')
+                    ->label(label:'Tahun Masuk')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('bln')
-                    ->label(label:'Bulan')
+                Tables\Columns\TextColumn::make('bln_input')
+                    ->label(label:'Bulan Masuk')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('saldo_akhir')
-                    ->money('IDR')
+                    ->prefix('Rp. ')
+                    ->numeric()
                     ->label(label:'Saldo')
                     ->searchable(),
             ])
-           
+            
             ->filters([
                 // Filter::make('thn')
                 // ->query(fn (Builder $query): Builder => $query->where('thn', true))

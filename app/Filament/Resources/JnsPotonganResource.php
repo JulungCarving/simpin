@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserKatResource\Pages;
-use App\Filament\Resources\UserKatResource\RelationManagers;
-use App\Models\UserKat;
+use App\Filament\Resources\JnsPotonganResource\Pages;
+use App\Filament\Resources\JnsPotonganResource\RelationManagers;
+use App\Models\JnsPotongan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,25 +13,32 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserKatResource extends Resource
+class JnsPotonganResource extends Resource
 {
-    protected static ?string $model = UserKat::class;
+    protected static ?string $model = JnsPotongan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
-    protected static ?string $navigationLabel = 'Kategori User';
-    protected static ?int $navigationSort =7;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPluralLabel(): ?string
+    {
+        return 'Jenis Potongan';
+    }
+    protected static ?int $navigationSort =3;
+    public static function getSlug(): string
+    {
+        return 'jenis-potongan';
+    }
+
     public static function getNavigationGroup() : String
     {
         return 'Master Data';
     }
 
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_kategori')
-                    ->label(label:'Kategori User')
-                    ->required(),
+                //
             ]);
     }
 
@@ -39,8 +46,7 @@ class UserKatResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_kategori')
-                    ->searchable(),
+                //
             ])
             ->filters([
                 //
@@ -54,20 +60,20 @@ class UserKatResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUserKats::route('/'),
-            'create' => Pages\CreateUserKat::route('/create'),
-            'edit' => Pages\EditUserKat::route('/{record}/edit'),
+            'index' => Pages\ListJnsPotongans::route('/'),
+            'create' => Pages\CreateJnsPotongan::route('/create'),
+            'edit' => Pages\EditJnsPotongan::route('/{record}/edit'),
         ];
-    }    
+    }
 }

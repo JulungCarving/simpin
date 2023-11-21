@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use Filament\Actions;
+use App\Imports\ImportUsers;
 use App\Filament\Resources\UserResource;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Actions\CreateAction;
@@ -14,11 +15,21 @@ class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 
+    // protected $dateFormat = 'Y-m-d';
+
     protected function getHeaderActions(): array
     {
+        // return [
+        //     ExcelImportAction::make()
+        //         ->color("primary"),
+        //     Actions\CreateAction::make(),
+        // ];
+
         return [
             ExcelImportAction::make()
-                ->color("primary"),
+                ->slideOver()
+                ->color("primary")
+                ->use(ImportUsers::class),
             Actions\CreateAction::make(),
         ];
     }

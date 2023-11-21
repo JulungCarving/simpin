@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UkerResource\Pages;
 use App\Filament\Resources\UkerResource\RelationManagers;
 use App\Models\Uker;
+use App\Models\UkerKat;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,7 +20,7 @@ class UkerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
     protected static ?string $navigationLabel = 'Unit Kerja';
-
+    protected static ?int $navigationSort =4;
     public static function getNavigationGroup() : String
     {
         return 'Master Data';
@@ -29,6 +30,9 @@ class UkerResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('uker_kats_id')
+                    ->label(label:'Category')
+                    ->relationship('ukerkat', 'uker_kategori'),
                 Forms\Components\TextInput::make('unit_kerja')
                     ->maxLength(255),
             ]);
@@ -40,6 +44,9 @@ class UkerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('kode_unit_kerja')
                     ->label('Kode Unit Kerja')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('ukerkat.uker_kategori')
+                    ->label('Category')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('unit_kerja')
                     ->label('Unit Kerja')

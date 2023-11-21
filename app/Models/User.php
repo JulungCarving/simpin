@@ -3,12 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Str;
-use App\Models\Uker;
-use App\Models\UserKat;
+use Carbon\Carbon;
 use App\Models\Bank;
+use App\Models\Uker;
+use DateTimeInterface;
+use App\Models\UserKat;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -22,15 +25,37 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
+    
+
+    // protected function createdAt(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value, $attributes) => Carbon::create($value)->format('Y/m/d')
+    //     );
+    // }
+    
+
+    //  protected $fillable = [
+    //     'ukers_id',
+    //     'bank_id',
+    //     'user_kats_id',
     //     'name',
     //     'email',
+    //     // email_verified_at
+    //     // password
+    //     // remember_token
+    //     // created_at
+    //     // updated_at
     //     'nip',
-    //     'password',
-    //     'ukers_id.unit_kerja',
-    // ];
+    //     'nag',
+    //     'tgl_joint',
+    //     'phone_number',
+    //     'norek',
+    //     'is_active',
+    //     'is_admin',
+    //  ];
     
-    protected $guarded = [];
+     protected $guarded = []; 
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,11 +67,24 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+ 
+
+//     /**
+//  * Prepare a date for array / JSON serialization.
+//  */
+// protected function serializeDate(DateTimeInterface $date): string
+// {
+//     return $date->format('Y-m-d');
+// }
+
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
-     */
+      * @var array<string, string>
+      */
+      
+//     protected $dateFormat = 'U';
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
@@ -61,6 +99,6 @@ class User extends Authenticatable
         }
 
     public function Bank(){
-        return $this->belongsTo(Bank::class);
+        return $this->belongsTo(Bank::class,'bank_id');
         }
 }

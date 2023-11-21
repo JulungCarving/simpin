@@ -22,6 +22,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Placeholder;
 use Maatwebsite\Excel\Excel as ExcelExcel;
@@ -29,6 +30,8 @@ use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UkerResource\Pages\ListUkers;
+// use Illuminate\Support\Carbon;
+// use Carbon\Carbon;
 
 
 
@@ -37,12 +40,12 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
+    protected static ?int $navigationSort =6;
     public static function getNavigationGroup() : String
     {
         return 'Master Data';
     }
-
+    
     public static function form(Form $form): Form
     {
         
@@ -81,15 +84,18 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('nip')
                             ->label(label:'Employee ID Number (NIP)')
                             ->maxLength(255),
+                        Forms\Components\Select::make('user_kats_id')
+                            ->label(label:'Member Category')
+                            ->relationship('userkat', 'user_kategori'),
                 ])->columnSpan(1),
 
                 Card::make()->schema([
-                    Forms\Components\Select::make('user_kats_id')
-                        ->label(label:'Member Category')
-                        ->relationship('userkat', 'user_kategori'),
                     Forms\Components\Select::make('bank_id')
                         ->label(label:'Bank')
                         ->relationship('bank', 'bank_name'),
+                    Forms\Components\TextInput::make('narek')
+                        ->label(label:'Nama Pemilik Rekening')
+                        ->maxLength(255),
                     Forms\Components\TextInput::make('norek')
                         ->label(label:'Nomor Rekening')
                         ->numeric()
@@ -118,6 +124,7 @@ class UserResource extends Resource
                     ->label(label:'Nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')
+                    ->url('https://web.whatsapp.com/')
                     ->label(label:'Nomor HP')
                     ->searchable(),
 
@@ -128,13 +135,21 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('userkat.user_kategori')
                     ->label(label:'Kategori')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('nip')
                     ->label(label:'NIP')
                     ->searchable(),
 
+                
+                Tables\Columns\TextColumn::make('tgl_joint')
+                    ->label(label:'Tanggal Gabung')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('Bank.bank_name')
                     ->label(label:'Bank')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('narek')
+                    ->label(label:'Nama Pemilik Rekening')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('norek')
@@ -148,19 +163,24 @@ class UserResource extends Resource
                     ->label(label:'As Admin')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->date()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('is_active')
-                    ->query(fn (Builder $query): Builder => $query->where('is_active', true)),
+                    ->query(fn (Builder $query): Builder => $query->where('is_active',true))
+                    ->label(label:'Active'),
                 Filter::make('as_admin')
                     ->query(fn (Builder $query): Builder => $query->where('is_admin',true))
+                    ->label(label:'Admin'),
+                SelectFilter::make('id_unit_kerja')
+                    ->relationship('uker', 'unit_kerja')
+                    ->label(label:'Unit Kerja'),
                 //
             ],layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
