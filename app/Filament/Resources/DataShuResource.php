@@ -37,7 +37,7 @@ class DataShuResource extends Resource
     }
     public static function getNavigationGroup() : String
     {
-        return 'Simpanan';
+        return 'SIMPANAN';
     }
     protected static ?int $navigationSort =5;
     public static function getSlug(): string
@@ -57,7 +57,7 @@ class DataShuResource extends Resource
                 )
                 ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->nag} - {$record->name}")
                 ->afterStateUpdated(function(Get $get , Set $set, ?string $state){
-                    $data = DataShu::whereUsersId($state)->orderBy('thn','desc')->first();
+                    $data = DataShu::whereUsersId($state)->orderBy('thn_input','desc')->first();
                     $set('saldo_keluar',0);
                     $set('saldo_akhir',number_format($data->saldo_akhir,0,',','.'));
                     $set('saldo',number_format($data->saldo_akhir,0,',','.'));

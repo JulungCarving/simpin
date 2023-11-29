@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DataBerjangkaThnResource\Pages;
-use App\Filament\Resources\DataBerjangkaThnResource\RelationManagers;
-use App\Models\DataBerjangkaThn;
+use App\Filament\Resources\DataPinjamanResource\Pages;
+use App\Filament\Resources\DataPinjamanResource\RelationManagers;
+use App\Models\DataPinjaman;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,25 +13,25 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DataBerjangkaThnResource extends Resource
+class DataPinjamanResource extends Resource
 {
-    protected static ?string $model = DataBerjangkaThn::class;
+    protected static ?string $model = DataPinjaman::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrows-pointing-in';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getNavigationGroup() : String
-    {
-        return 'SIMPANAN';
-    }
-    protected static ?int $navigationSort =4;
-    public static function getSlug(): string
-    {
-        return 'data-simpanan-berjangka-thn';
-    }
     public static function getPluralLabel(): ?string
     {
-        return 'Simpanan Berjangka Tahunan';
+        return 'Data Pinjaman';
     }
+    public static function getNavigationGroup() : String
+    {
+        return 'KEWAJIBAN';
+    }
+    protected static ?int $navigationSort =1;
+    public static function getSlug(): string
+    {
+        return 'data-pinjaman';
+    } 
 
     public static function form(Form $form): Form
     {
@@ -70,9 +70,9 @@ class DataBerjangkaThnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDataBerjangkaThns::route('/'),
-            'create' => Pages\CreateDataBerjangkaThn::route('/create'),
-            'edit' => Pages\EditDataBerjangkaThn::route('/{record}/edit'),
+            'index' => Pages\ListDataPinjamen::route('/'),
+            'create' => Pages\CreateDataPinjaman::route('/create'),
+            'edit' => Pages\EditDataPinjaman::route('/{record}/edit'),
         ];
     }
 }

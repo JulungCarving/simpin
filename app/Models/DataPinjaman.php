@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JnsPinjaman extends Model
+class DataPinjaman extends Model
 {
     use HasFactory;
-    protected $table = 'jenis_pinjaman';
+    protected $table = 'data_pinjaman';
 }

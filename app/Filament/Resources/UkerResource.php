@@ -2,17 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UkerResource\Pages;
-use App\Filament\Resources\UkerResource\RelationManagers;
-use App\Models\Uker;
-use App\Models\UkerKat;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\Uker;
+use App\Models\User;
 use Filament\Tables;
+use App\Models\UkerKat;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Tables\Columns\TextColumn;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UkerResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UkerResource\RelationManagers;
 
 class UkerResource extends Resource
 {
@@ -51,6 +53,7 @@ class UkerResource extends Resource
                 Tables\Columns\TextColumn::make('unit_kerja')
                     ->label('Unit Kerja')
                     ->searchable(),
+                
             ])
             ->filters([
                 //

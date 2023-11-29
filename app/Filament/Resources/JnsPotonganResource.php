@@ -46,7 +46,17 @@ class JnsPotonganResource extends Resource
     {
         return $table
             ->columns([
-                //
+            Tables\Columns\TextColumn::make('potongan_name')
+                ->label(label:'Jenis Potongan')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('bunga')
+                ->label(label:'Bunga / Tahun')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('plafon')
+                ->label(label:'Plafon')
+                ->prefix('Rp. ')
+                ->numeric()
+                ->searchable(),
             ])
             ->filters([
                 //

@@ -10,6 +10,7 @@ use App\Models\DataPokok;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\DB;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -29,7 +30,7 @@ class DataPokokResource extends Resource
 
     public static function getNavigationGroup() : String
     {
-        return 'Simpanan';
+        return 'SIMPANAN';
     }
 
     protected static ?int $navigationSort =1;
@@ -54,9 +55,16 @@ class DataPokokResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        // (Table::table('data_simpanan_pokok')
+        //         ->whereRaw('saldo_akhir in (select max(id) from data_simpanan_pokok)')
+        //         ->groupBy('users_id')
+        //         ->orderBy('id', 'desc'))
+   
             ->modifyQueryUsing(fn(Builder $query): Builder => $query
-            ->whereRaw('saldo_akhir in (select max(saldo_akhir) from data_simpanan_pokok group by (users_id)) '))
-            
+            ->whereRaw('saldo_akhir in (select max(saldo_akhir+0) from data_simpanan_pokok)')
+            ->orderBy('id','desc')
+            ->groupBy('users_id')
+            )
             ->columns([
                 Tables\Columns\TextColumn::make('User.nag')
                     ->label(label:'NAG')

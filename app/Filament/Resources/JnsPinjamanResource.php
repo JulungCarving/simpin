@@ -2,16 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\JnsPinjamanResource\Pages;
-use App\Filament\Resources\JnsPinjamanResource\RelationManagers;
-use App\Models\JnsPinjaman;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\JnsPinjaman;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\JnsPinjamanResource\Pages;
+use App\Filament\Resources\JnsPinjamanResource\RelationManagers;
 
 class JnsPinjamanResource extends Resource
 {
@@ -43,7 +43,20 @@ class JnsPinjamanResource extends Resource
     {
         return $table
             ->columns([
-                //
+            Tables\Columns\TextColumn::make('pinjaman_name')
+                ->label(label:'Jenis Pinjaman ')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('bunga_pertahun')
+                ->label(label:'Bunga / Tahun')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('plafon')
+                ->label(label:'Plafon')
+                ->prefix('Rp. ')
+                ->numeric()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('keterangan')
+                ->label(label:'Description')
+                ->searchable(),
             ])
             ->filters([
                 //
@@ -68,7 +81,7 @@ class JnsPinjamanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListJnsPinjamen::route('/'),
+            'index' => Pages\ListJnsPinjaman::route('/'),
             'create' => Pages\CreateJnsPinjaman::route('/create'),
             'edit' => Pages\EditJnsPinjaman::route('/{record}/edit'),
         ];

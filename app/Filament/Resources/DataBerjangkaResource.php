@@ -29,7 +29,7 @@ class DataBerjangkaResource extends Resource
 
     public static function getNavigationGroup() : String
     {
-        return 'Simpanan';
+        return 'SIMPANAN';
     }
     public static function getSlug(): string
     {

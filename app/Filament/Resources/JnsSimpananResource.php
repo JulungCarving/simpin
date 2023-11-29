@@ -46,7 +46,23 @@ class JnsSimpananResource extends Resource
     {
         return $table
             ->columns([
-                //
+            Tables\Columns\TextColumn::make('simpanan_name')
+                ->label(label:'Jenis Simpanan ')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('bunga_pertahun')
+                ->label(label:'Bunga / Tahun')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('ppn_bunga')
+                ->label(label:'PPN Bunga')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('plafon')
+                ->label(label:'Plafon')
+                ->prefix('Rp. ')
+                ->numeric()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('Keterangan')
+                ->label(label:'Description')
+                ->searchable(),
             ])
             ->filters([
                 //

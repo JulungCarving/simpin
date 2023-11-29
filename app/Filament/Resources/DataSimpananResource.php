@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DataBerjangkaThnResource\Pages;
-use App\Filament\Resources\DataBerjangkaThnResource\RelationManagers;
-use App\Models\DataBerjangkaThn;
+use App\Filament\Resources\DataSimpananResource\Pages;
+use App\Filament\Resources\DataSimpananResource\RelationManagers;
+use App\Models\DataSimpanan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,25 +13,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DataBerjangkaThnResource extends Resource
+class DataSimpananResource extends Resource
 {
-    protected static ?string $model = DataBerjangkaThn::class;
+    protected static ?string $model = DataSimpanan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrows-pointing-in';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getPluralLabel(): ?string
+    {
+        return 'DATA SIMPANAN';
+    }
 
     public static function getNavigationGroup() : String
     {
         return 'SIMPANAN';
     }
-    protected static ?int $navigationSort =4;
-    public static function getSlug(): string
-    {
-        return 'data-simpanan-berjangka-thn';
-    }
-    public static function getPluralLabel(): ?string
-    {
-        return 'Simpanan Berjangka Tahunan';
-    }
+    protected static ?int $navigationSort =6;
 
     public static function form(Form $form): Form
     {
@@ -70,9 +67,9 @@ class DataBerjangkaThnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDataBerjangkaThns::route('/'),
-            'create' => Pages\CreateDataBerjangkaThn::route('/create'),
-            'edit' => Pages\EditDataBerjangkaThn::route('/{record}/edit'),
+            'index' => Pages\ListDataSimpanans::route('/'),
+            'create' => Pages\CreateDataSimpanan::route('/create'),
+            'edit' => Pages\EditDataSimpanan::route('/{record}/edit'),
         ];
     }
 }

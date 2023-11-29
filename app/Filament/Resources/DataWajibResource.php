@@ -29,7 +29,7 @@ class DataWajibResource extends Resource
 
     public static function getNavigationGroup() : String
     {
-        return 'Simpanan';
+        return 'SIMPANAN';
     }
     protected static ?int $navigationSort =2;
     public static function getSlug(): string

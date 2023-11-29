@@ -119,19 +119,19 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nag')
                     ->label(label:'NAG')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(label:'Nama')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')
                     ->url('https://web.whatsapp.com/')
                     ->label(label:'Nomor HP')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('Uker.unit_kerja')
                     ->label(label:'Unit Kerja')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('userkat.user_kategori')
                     ->label(label:'Kategori')
                     ->searchable(),
@@ -170,7 +170,7 @@ class UserResource extends Resource
                     ->date()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('nag','desc')
             ->filters([
                 Filter::make('is_active')
                     ->query(fn (Builder $query): Builder => $query->where('is_active',true))
@@ -184,7 +184,7 @@ class UserResource extends Resource
                 //
             ],layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
-                // Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
