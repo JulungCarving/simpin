@@ -47,13 +47,14 @@ class DataWajibResource extends Resource
             ->schema([
                 //
             ]);
+
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->modifyQueryUsing(fn(Builder $query): Builder => $query
-            ->whereRaw('saldo_akhir in (select max(saldo_akhir+0) from data_simpanan_wajib group by (users_id)) '))
+            ->whereRaw('id IN (SELECT MAX(id) FROM `data_simpanan_wajib` GROUP BY nag)'))
             ->columns([
             
                 Tables\Columns\TextColumn::make('User.nag')

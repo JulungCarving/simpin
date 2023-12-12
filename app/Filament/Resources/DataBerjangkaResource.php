@@ -51,39 +51,37 @@ class DataBerjangkaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            
-                ->modifyQueryUsing(fn(Builder $query): Builder => $query
-                ->whereRaw('saldo_akhir in (select max(saldo_akhir+0) from data_simpanan_berjangka_bln group by (users_id)) '))
-                ->columns([
-                
-                    Tables\Columns\TextColumn::make('User.nag')
+            ->modifyQueryUsing(fn(Builder $query): Builder => $query
+            ->whereRaw('id IN (SELECT MAX(id) FROM `data_simpanan_berjangka_bln` GROUP BY nag)'))
+            ->columns([
+                Tables\Columns\TextColumn::make('User.nag')
                         ->label(label:'NAG')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('User.name')
+                Tables\Columns\TextColumn::make('User.name')
                         ->label(label:'Nama')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('thn')
+                Tables\Columns\TextColumn::make('thn')
                         ->label(label:'Tahun ')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('bln')
+                Tables\Columns\TextColumn::make('bln')
                         ->label(label:'Bulan')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('saldo_masuk')
+                Tables\Columns\TextColumn::make('saldo_masuk')
                         ->label(label:'Masuk')
                         ->prefix('Rp. ')
                         ->numeric()
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('saldo_keluar')
+                Tables\Columns\TextColumn::make('saldo_keluar')
                         ->label(label:'Pengambilan')
                         ->prefix('Rp. ')
                         ->numeric()
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('bunga')
+                Tables\Columns\TextColumn::make('bunga')
                         ->label(label:'Bunga')
                         ->prefix('Rp. ')
                         ->numeric()
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('saldo_akhir')
+                Tables\Columns\TextColumn::make('saldo_akhir')
                         ->label(label:'Saldo')
                         ->prefix('Rp. ')
                         ->numeric()

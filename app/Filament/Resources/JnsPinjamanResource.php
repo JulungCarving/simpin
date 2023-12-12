@@ -47,7 +47,7 @@ class JnsPinjamanResource extends Resource
                 ->label(label:'Jenis Pinjaman ')
                 ->searchable(),
             Tables\Columns\TextColumn::make('bunga_pertahun')
-                ->label(label:'Bunga / Tahun')
+                ->label(label:'Bunga/Tahun')
                 ->searchable(),
             Tables\Columns\TextColumn::make('plafon')
                 ->label(label:'Plafon')
@@ -56,7 +56,8 @@ class JnsPinjamanResource extends Resource
                 ->searchable(),
             Tables\Columns\TextColumn::make('keterangan')
                 ->label(label:'Description')
-                ->searchable(),
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

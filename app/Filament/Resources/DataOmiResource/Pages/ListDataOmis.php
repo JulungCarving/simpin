@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\DataOmiResource\Pages;
 
-use App\Filament\Resources\DataOmiResource;
+use App\Filament\Imports\DataOmiImporter;
 use Filament\Actions;
+use Filament\Actions\ImportAction;
+use App\Filament\Imports\ProductImporter;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\DataOmiResource;
+
 
 class ListDataOmis extends ListRecords
 {
@@ -14,6 +18,12 @@ class ListDataOmis extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            ImportAction::make()
+            ->label('Import Data')
+            ->importer(DataOmiImporter::class)
         ];
+        
     }
+
+    
 }

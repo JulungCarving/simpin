@@ -9,4 +9,8 @@ class DataOmi extends Model
 {
     use HasFactory;
     protected $table = 'data_omi';
+
+    public function User(){
+        return $this->belongsTo(User::class,'nag','nag');
+        }
 }

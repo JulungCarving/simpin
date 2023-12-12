@@ -6,7 +6,7 @@ use App\Filament\Resources\DataPinjamanResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListDataPinjamen extends ListRecords
+class ListDataPinjaman extends ListRecords
 {
     protected static string $resource = DataPinjamanResource::class;
 

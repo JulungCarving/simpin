@@ -46,8 +46,25 @@ class DataOmiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->modifyQueryUsing(fn(Builder $query): Builder => $query
+        ->whereRaw('id IN (SELECT MAX(id) FROM `data_omi` GROUP BY nag)'))
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('User.nag')
+                    ->label(label:'NAG')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('User.name')
+                    ->label(label:'Nama')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('thn')
+                    ->label(label:'Tahun'),
+                Tables\Columns\TextColumn::make('bln')
+                    ->label(label:'Bulan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nominal')
+                    ->prefix('Rp. ')
+                    ->numeric()
+                    ->label(label:'Nominal')
+                    ->searchable(),
             ])
             ->filters([
                 //

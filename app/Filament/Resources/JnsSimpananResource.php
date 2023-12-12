@@ -50,7 +50,7 @@ class JnsSimpananResource extends Resource
                 ->label(label:'Jenis Simpanan ')
                 ->searchable(),
             Tables\Columns\TextColumn::make('bunga_pertahun')
-                ->label(label:'Bunga / Tahun')
+                ->label(label:'Bunga/Tahun')
                 ->searchable(),
             Tables\Columns\TextColumn::make('ppn_bunga')
                 ->label(label:'PPN Bunga')
@@ -60,9 +60,10 @@ class JnsSimpananResource extends Resource
                 ->prefix('Rp. ')
                 ->numeric()
                 ->searchable(),
-            Tables\Columns\TextColumn::make('Keterangan')
+            Tables\Columns\TextColumn::make('keterangan')
                 ->label(label:'Description')
-                ->searchable(),
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

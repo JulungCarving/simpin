@@ -10,6 +10,6 @@ class DataBerjangka extends Model
     use HasFactory;
     protected $table = 'data_simpanan_berjangka_bln';
     public function User(){
-        return $this->belongsTo(User::class,'users_id');
+        return $this->belongsTo(User::class,'nag','nag');
         }
 }

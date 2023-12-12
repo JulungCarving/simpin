@@ -11,6 +11,6 @@ class DataWajib extends Model
     protected $table = 'data_simpanan_wajib';
 
     public function User(){
-        return $this->belongsTo(User::class,'users_id');
+        return $this->belongsTo(User::class,'nag','nag');
         }
 }

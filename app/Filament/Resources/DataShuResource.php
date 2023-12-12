@@ -78,8 +78,8 @@ class DataShuResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-         ->modifyQueryUsing(fn(Builder $query): Builder => $query
-         ->whereRaw('saldo_akhir in (select max(saldo_akhir+0) from data_shu group by (users_id)) '))
+        ->modifyQueryUsing(fn(Builder $query): Builder => $query
+         ->whereRaw('id IN (SELECT MAX(id) FROM `data_shu` GROUP BY nag)'))
             
             ->columns([
                 Tables\Columns\TextColumn::make('User.nag')

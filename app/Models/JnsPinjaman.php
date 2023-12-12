@@ -9,4 +9,5 @@ class JnsPinjaman extends Model
 {
     use HasFactory;
     protected $table = 'jenis_pinjaman';
+
 }

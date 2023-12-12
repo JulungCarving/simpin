@@ -55,16 +55,10 @@ class DataPokokResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        // (Table::table('data_simpanan_pokok')
-        //         ->whereRaw('saldo_akhir in (select max(id) from data_simpanan_pokok)')
-        //         ->groupBy('users_id')
-        //         ->orderBy('id', 'desc'))
-   
+        
             ->modifyQueryUsing(fn(Builder $query): Builder => $query
-            ->whereRaw('saldo_akhir in (select max(saldo_akhir+0) from data_simpanan_pokok)')
-            ->orderBy('id','desc')
-            ->groupBy('users_id')
-            )
+            ->whereRaw('id IN (SELECT MAX(id) FROM `data_simpanan_pokok` GROUP BY nag)'))
+            
             ->columns([
                 Tables\Columns\TextColumn::make('User.nag')
                     ->label(label:'NAG')
