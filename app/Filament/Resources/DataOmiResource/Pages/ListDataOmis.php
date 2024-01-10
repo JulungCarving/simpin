@@ -19,7 +19,7 @@ class ListDataOmis extends ListRecords
         return [
             Actions\CreateAction::make(),
             ImportAction::make()
-            ->label('Import Data')
+            ->label('Upload Data')
             ->importer(DataOmiImporter::class)
         ];
         

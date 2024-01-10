@@ -41,31 +41,39 @@ class DataPinjamanResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('User.nag')
                     ->label(label:'NAG')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('User.name')
                     ->label(label:'Nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenis_pinjaman.pinjaman_name')
+                Tables\Columns\TextColumn::make('jnspinjaman.pinjaman_name')
+                    ->alignCenter()
                     ->label(label:'Jenis Pinjaman')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenis_pinjaman.bunga_pertahun')
+                Tables\Columns\TextColumn::make('jnspinjaman.bunga_pertahun')
+                    ->alignCenter()
                     ->label(label:'Bunga/Tahun')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('disetujui')
+                    ->alignCenter()
                     ->prefix('Rp. ')
                     ->numeric()
                     ->label(label:'Disetujui')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('angsuran')
+                    ->alignCenter()
                     ->label(label:'Angsuran')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mulai')
+                    ->alignCenter()
                     ->label(label:'Mulai')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('selesai')
+                    ->alignCenter()
                     ->label(label:'Selesai')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_lunas')
+                    ->alignCenter()
                     ->label(label:'Lunas')
                     ->boolean(),
             ])
